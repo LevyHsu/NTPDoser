@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <stdint.h>
 #include <sys/time.h>
@@ -166,7 +167,7 @@ void* SendNTP(void* args)
   sockaddr_in servaddr,cliaddr;
 
   UCHAR ntp_magic[8];
-  ntp_magic[0] = 0x1b; //NTP V3 Monlist Request
+  ntp_magic[0] = 0x17;
   ntp_magic[1] = 0x00;
   ntp_magic[2] = 0x03;
   ntp_magic[3] = 0x2A;
@@ -229,11 +230,11 @@ void* SendNTP(void* args)
 
   //填充UDP头
   udp = (struct udphdr*)(buffer + sizeof(struct ip));
-  udp->uh_sport = cliaddr.sin_port;
-  udp->uh_dport = servaddr.sin_port;
-  udp->uh_ulen = htons(sizeof(struct udphdr) + 8 * sizeof(UCHAR)) ;
+  udp->source = cliaddr.sin_port;
+  udp->dest = servaddr.sin_port;
+  udp->len = htons(sizeof(struct udphdr) + 8 * sizeof(UCHAR)) ;
   //udp->uh_sum = 0;
-  udp->uh_sum=check_sum((unsigned short *)udp,sizeof(struct udphdr));
+  udp->check =check_sum((unsigned short *)udp,sizeof(struct udphdr));
 
   //填充NTP头
   memcpy(buffer + sizeof(struct ip) + sizeof(struct udphdr) , ntp_magic , 8 * sizeof(UCHAR));
