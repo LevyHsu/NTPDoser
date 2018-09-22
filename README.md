@@ -4,13 +4,13 @@
 ###### NTP Doser is just a pentesting tool , so don't be evil.
 
 ## Compiling.
-	```bash
+	
 	gcc NTPDoser.cpp -o NTPDoser -lstdc++ -lpthread
-	```	
+	
 ## Running NTP Doser.
-	```bash
+
 	sudo ./NTPDoser [target] [threads] [time]
-	```
+
 ## Screenshot.
 ![image](https://github.com/DrizzleRisk/NTPDoser/blob/master/screenshot/help.png)
 ![image](https://github.com/DrizzleRisk/NTPDoser/blob/master/screenshot/test.png)
