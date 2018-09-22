@@ -1,13 +1,12 @@
 # NTP Doser          
 ## Introduction.
-### NTP Doser* is a NTP Amplification DoS tool which code by C/C++.
-###### NTP Doser* is just a pentesting tool , so don't be evil.
+### NTP Doser is a NTP Amplification DoS tool which code by C/C++.
+###### NTP Doser is just a pentesting tool , so don't be evil.
 
 ## Compiling.
 	```bash
 	gcc NTPDoser.cpp -o NTPDoser -lstdc++ -lpthread
-	```
-	
+	```	
 ## Running NTP Doser.
 	```bash
 	sudo ./NTPDoser [target] [threads] [time]
